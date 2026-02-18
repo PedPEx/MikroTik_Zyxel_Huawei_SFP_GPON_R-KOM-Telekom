@@ -42,11 +42,11 @@ Log in to your MikroTik device (or similar router) and with its default config a
     [10.10.1.1](http://10.10.1.1)\
     Default login is user:`admin` pw:`1234`
 
-    ![System Overview](pics\zyxel\system_overview.png "System Overview")\
+    ![System Overview](pics/zyxel/system_overview.png "System Overview")\
     Mine came with the firmware `V1.00(ABVJ.0)b1e`. This firmware has `ssh` deactivated by default! To enable it, you'll either need to flash the firmware `V1.00(ABVJ.0)b3v` or `V2.50(ABVJ.1)b1d` to it (thanks to [maurice-w](https://github.com/maurice-w) - [source](https://github.com/xvzf/zyxel-gpon-sfp/issues/35#issuecomment-2773403653)). You can also find these in the [`files` subfolder](files/zyxel/)\
-    ![GPON Connection Information](pics\zyxel\GPON_info.png "GPON Connection Information")\
+    ![GPON Connection Information](pics/zyxel/GPON_info.png "GPON Connection Information")\
     Line Staus `O1` indicates, that no fiber link is present at the moment. You want Line Status of `O5`, which indicates a GPON link, but not necessarly a working identification at the ISP side!\
-    ![SLID Configuration](pics\zyxel\SLID_config.png "SLID Configuration")\
+    ![SLID Configuration](pics/zyxel/SLID_config.png "SLID Configuration")\
     
     
 
