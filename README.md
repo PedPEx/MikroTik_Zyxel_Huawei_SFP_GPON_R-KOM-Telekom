@@ -46,7 +46,24 @@ Log in to your MikroTik device (or similar router) and with its default config a
     ![System Overview](pics/zyxel/system_overview.png "System Overview")\
     Mine came with the firmware `V1.00(ABVJ.0)b1e`. This firmware has `ssh` deactivated by default! To enable it, you'll either need to flash the firmware `V1.00(ABVJ.0)b3v` or `V2.50(ABVJ.1)b1d` to it (thanks to [maurice-w](https://github.com/maurice-w) - [source](https://github.com/xvzf/zyxel-gpon-sfp/issues/35#issuecomment-2773403653)). You can also find these in the [files subfolder](files/zyxel/)\
     In order to connect via ssh to the ONT on Windows, you need to execute the following command in the Terminal/CMD:\
-    `ssh admin@10.10.1.1 -oHostKeyAlgorithms=+ssh-dss`. On recent Linux distros a ssh connection is refused due to the lack of the ancient Host Key Algorithmn support in the ssh client. The ssh access is just needed to clone the serial number of another ONT modem and set that SN in the GPON SFP.\
+    `ssh admin@10.10.1.1 -oHostKeyAlgorithms=+ssh-dss`. On recent Linux distros a ssh connection is refused due to the lack of the ancient Host Key Algorithmn support in the ssh client.
+
+    <details>
+    <summary>Workaround on Linux</summary>
+    Following command can be used to get SSH access using an old Docker image:
+
+    ```bash
+    docker run -it --rm debian:stretch \
+    bash -c "echo 'deb http://archive.debian.org/debian/ stretch main' > /etc/apt/sources.list && \
+            echo 'deb http://archive.debian.org/debian-security/ stretch/updates main' >> /etc/apt/sources.list && \
+            apt update && \
+            apt install -y openssh-client && \
+            ssh -v admin@10.10.1.1 \
+                -oHostKeyAlgorithms=+ssh-dss"
+    ```
+    </details>
+
+    The ssh access is just needed to clone the serial number of another ONT modem and set that SN in the GPON SFP.\
     ![GPON Connection Information](pics/zyxel/GPON_info.png "GPON Connection Information")\
     Line Status `O1` indicates that no fiber link is present at the moment. You want a Line Status of `O5`, which indicates a GPON link, but not necessarily a working identification at the ISP side!\
     ![SLID Configuration](pics/zyxel/SLID_config.png "SLID Configuration")
@@ -148,6 +165,22 @@ Melde dich an deinem MikroTik-Gerät (oder einem ähnlichen Router) an und führ
     Mein SFP ONT wurde mit der Firmware `V1.00(ABVJ.0)b1e` ausgeliefert. Bei dieser Firmware ist `ssh` standardmäßig deaktiviert! Um es zu aktivieren, musst du entweder die Firmware `V1.00(ABVJ.0)b3v` oder `V2.50(ABVJ.1)b1d` aufspielen (Danke an [maurice-w](https://github.com/maurice-w) - [Quelle](https://github.com/xvzf/zyxel-gpon-sfp/issues/35#issuecomment-2773403653)). Du findest diese auch im [files Unterordner](files/zyxel/)\
     Um in Windows auf das ONT via ssh zugreifen zu können, muss folgendes Kommando im Terminal/CMD genutzt werden:\
     `ssh admin@10.10.1.1 -oHostKeyAlgorithms=+ssh-dss`, auf aktuellen Linux Systemen ist eine ssh Verbindung scheinbar nicht möglich, da der Linux ssh Client diesen Host Key Algorithmus gar nicht mehr unterstützt.\
+
+    <details>
+    <summary>Workaround auf Linux</summary>
+    Folgender Befehl kann genutzt werden, um mittels eines alten Docker Image SSH Zugang zu erhalten:
+
+    ```bash
+    docker run -it --rm debian:stretch \
+    bash -c "echo 'deb http://archive.debian.org/debian/ stretch main' > /etc/apt/sources.list && \
+            echo 'deb http://archive.debian.org/debian-security/ stretch/updates main' >> /etc/apt/sources.list && \
+            apt update && \
+            apt install -y openssh-client && \
+            ssh -v admin@10.10.1.1 \
+                -oHostKeyAlgorithms=+ssh-dss"
+    ```
+    </details>
+
     ![GPON Connection Information](pics/zyxel/GPON_info.png "GPON Connection Information")\
     Der Line Status `O1` zeigt an, dass momentan keine Glasfaserverbindung besteht. Du benötigst den Line Status `O5`, was auf einen GPON-Link hindeutet, aber nicht zwingend auf eine funktionierende Identifikation auf Seiten des ISP!\
     ![SLID Configuration](pics/zyxel/SLID_config.png "SLID Configuration")
